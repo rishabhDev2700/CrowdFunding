@@ -9,4 +9,7 @@ class Project(models.Model):
     description = models.TextField(max_length=200,blank=False)
     target = models.IntegerField(blank=False)
     goals = models.TextField(max_length=200,blank=False)
-    owner = models.ForeignKey(to=CustomUser,on_delete=models.DO_NOTHING)
+    owner = models.OneToOneField(to=CustomUser,on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f'Title:{self.title}, target:{self.target}, owner:{self.owner}'
