@@ -5,9 +5,21 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Base</title>
+    <title>{%block title%}{%endblock%}</title>
 </head>
 <body>
-<h1>Welcome</h1>
+{%if user.is_authenticated%}
+<a href="{%url 'logout'%}">Logout</a>
+{%endif%}
+{% if messages %}
+<div style="color:red; font-size:2rem; font-family:sans-serif;margin:2rem;" class="messages">
+    {% for message in messages %}
+    <div
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{%block content%}{%endblock%}
 </body>
 </html>
