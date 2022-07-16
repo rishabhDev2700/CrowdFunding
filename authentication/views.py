@@ -1,6 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
-from django.urls import reverse
+from django.shortcuts import render, redirect
 from authentication.forms import CustomUserCreationForm
 
 
@@ -11,13 +11,18 @@ def login_user(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return reverse('dashboard')
+            messages.success(request, 'Successfully Logged in')
+            return render(request, 'base.html')
+        else:
+            messages.info(request, 'Invalid Credentials')
+            return redirect('login')
     return render(request, 'authentication/login.html')
 
 
 def logout_user(request):
     logout(request)
-    return render(request, 'authentication/login.html')
+    messages.success(request, 'Successfully Logged out')
+    return redirect('login')
 
 
 def register_user(request):
@@ -25,6 +30,8 @@ def register_user(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'authentication/login.html')
+            messages.success(request, 'Account Created Successfully')
+            return redirect('login')
+        messages.info(request,'Invalid data')
     form = CustomUserCreationForm()
-    return render(request, 'base.html', {'form': form})
+    return render(request, 'authentication/register.html', {'form': form})
