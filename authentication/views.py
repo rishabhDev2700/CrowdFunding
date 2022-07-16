@@ -12,7 +12,7 @@ def login_user(request):
         if user:
             login(request, user)
             messages.success(request, 'Successfully Logged in')
-            return render(request, 'base.html')
+            return render(request, 'user_dashboard/dashboard.html')
         else:
             messages.info(request, 'Invalid Credentials')
             return redirect('login')
