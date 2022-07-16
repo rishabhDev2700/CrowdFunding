@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{%block title%}Projects{%endblock%}
+{%block content%}
+<div>
+    <h2>Projects</h2>
+    {%for project in all_projects%}
+    <div>{{project.title}}</div>
+    <div>{{project.description}}</div>
+    <div>{{project.target}}</div>
+    <hr>
+    <br>
+    {%endfor%}
+</div>
+{%endblock%}

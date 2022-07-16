@@ -1,0 +1,15 @@
+{%extends 'base.html'%}
+{%block title%}Dashboard{%endblock%}
+{%block content%}
+<div>
+    <h2>My Projects</h2>
+    {%for project in my_projects%}
+    <div>{{project.title}}</div>
+    <div>{{project.description}}</div>
+    <div>{{project.target}}</div>
+    <a href="{%url 'project update' project.id%}">Update</a>
+    <hr>
+    <br>
+    {%endfor%}
+</div>
+{%endblock%}
