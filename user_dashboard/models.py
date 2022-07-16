@@ -8,6 +8,7 @@ class Project(models.Model):
     target = models.IntegerField(blank=False)
     goals = models.TextField(max_length=200, blank=False)
     owner = models.OneToOneField(to=CustomUser, on_delete=models.DO_NOTHING)
+    objects=models.Manager()
 
     def __str__(self):
         return f'Title:{self.title}, target:{self.target}, owner:{self.owner}'
