@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'user_dashboard',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,6 @@ AUTH_USER_MODEL = "authentication.CustomUser"
 # Media files setting
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+LOGIN_REDIRECT_URL='dashboard'
+LOGOUT_REDIRECT_URL='login'

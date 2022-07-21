@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/',include('authentication.urls')),
     path('',include('user_dashboard.urls')),
+    path('payment/',include('payment.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
