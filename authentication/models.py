@@ -9,12 +9,13 @@ class CustomUser(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING)
     bio = models.TextField(max_length=200, default="")
     occupation = models.CharField(max_length=50, default="")
     picture = models.ImageField(upload_to='users/%Y/%m', blank=True)
     contact = models.CharField(max_length=12, blank=True)
     location = models.TextField(max_length=100, blank=True)
+    objects = models.Manager()
 
     def __str__(self):
-        return self.user
+        return self.user.username

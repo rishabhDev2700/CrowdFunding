@@ -2,14 +2,11 @@
 {%block title%}Projects{%endblock%}
 {%block content%}
 <div>
-    <h2>Projects</h2>
-    {%for project in all_projects%}
+    <h2>Project</h2>
     <div>{{project.title}}</div>
     <div>{{project.description}}</div>
     <div>{{project.target}}</div>
-    <a href="{%url 'project details' project.id %}">View</a>
+    <a href="{%url 'contribute to' project.id %}">Contribute</a>
     <hr>
-    <br>
-    {%endfor%}
 </div>
 {%endblock%}

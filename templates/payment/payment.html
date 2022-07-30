@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+<style>
+      * {
+        box-sizing: border-box;
+        padding: 0px;
+        margin: 0px;
+        font-family: cursive;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background-color: #f1f5f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background-color: white;
+        padding: 25px;
+        border: 1px solid #bbbbbb;
+        border-radius: 5px;
+        box-shadow: 1px 1px 10px 0px rgb(0 0 0 / 25%);
+      }
+      .title {
+        text-align: center;
+        letter-spacing: 1px;
+      }
+      .muted {
+        color: #8e7f7f;
+        display: block;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      .btn_container {
+        padding: 20px;
+        text-align: center;
+      }
+      .btn {
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 4px 8px;
+        background-color: #ffaaa7;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1 class="title">Contribute</h1>
+      <div class="btn_container">
+        <button class="btn" id="pay-btn">Checkout</button>
+      </div>
+    </div>
+  </body>
+
+  <!-- Razorpay's Javascript code. -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    var options = {
+      key: "{{ merchant_key }}",
+      amount: "{{ amount }}",
+      currency: "{{ currency }}",
+
+      // Your/store name.
+      name: "Fuzzydeck",
+      order_id: "{{ order_id }}",
+      callback_url: "{{ callback_url }}",
+    };
+
+    var rzp1 = new Razorpay(options);
+    document.getElementById("pay-btn").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
+  </script>
+</html>
