@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from authentication.models import UserProfile
 from config import settings
 from payment.models import Contribution
+from user_dashboard.models import Project
 
 client = razorpay.Client(auth=(settings.RAZORPAY_ID, settings.RAZORPAY_SECRET_KEY))
 
@@ -12,7 +13,7 @@ client = razorpay.Client(auth=(settings.RAZORPAY_ID, settings.RAZORPAY_SECRET_KE
 def create_order(request):
     amount = int(request.POST['amount'])*100
     currency = request.POST['currency']
-    project_id = request.POST['project_id']
+    project = request.POST['project_id']
     user_profile = UserProfile.objects.get(user=request.user)
     contact = user_profile.contact
     address = user_profile.location
@@ -20,8 +21,13 @@ def create_order(request):
     order = client.order.create(data=dict(amount=amount, currency=currency, payment_capture='0'))
     order_id = order['id']
     callback_url = 'pay_handle/ '
-    contribution = Contribution(user_id=user_profile.id, project=project_id, amount=amount, currency=currency,
-                                order_id=order_id)
+    contribution = Contribution(
+                                user=user_profile,
+                                project=Project.objects.get(pk=project),
+                                amount=amount,
+                                currency=currency,
+                                order_id=order_id,
+                                )
     contribution.save()
     context = {
         'order_id': order_id,
@@ -51,13 +57,14 @@ def payment_handler(request):
             print(details)
             contribution = Contribution.objects.get(order_id=order_id)
             amount = contribution.amount
+            contribution.payment_id = payment_id
+            contribution.verification_signature = signature
             result = client.utility.verify_payment_signature(details)
-            if result is None:
+            if result is not None:
                 try:
                     client.payment.capture(payment_id, amount)
-                    contribution.payment_id = payment_id
-                    contribution.verification_signature = signature
                     contribution.verification_status = True
+                    contribution.save()
                     return render(request, 'payment/success.html')
                 except:
                     contribution.delete()

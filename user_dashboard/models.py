@@ -7,7 +7,7 @@ class Project(models.Model):
     description = models.TextField(max_length=200, blank=False)
     target = models.IntegerField(blank=False)
     goals = models.TextField(max_length=200, blank=False)
-    owner = models.OneToOneField(to=CustomUser, on_delete=models.DO_NOTHING)
+    owner = models.ForeignKey(to=CustomUser, on_delete=models.DO_NOTHING)
     objects = models.Manager()
 
     def __str__(self):

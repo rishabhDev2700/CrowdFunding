@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'authentication',
     'user_dashboard',
     'payment',
@@ -134,3 +136,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 RAZORPAY_ID = 'rzp_test_RDG2o40X7gZxXF'
 RAZORPAY_SECRET_KEY = '0s6rABUcZCRu9ugIOKYUxJXq'
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
