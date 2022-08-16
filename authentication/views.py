@@ -1,3 +1,4 @@
+from cProfile import Profile
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,7 @@ def login_user(request):
             messages.success(request, 'Successfully Logged in')
             return redirect('dashboard')
         else:
-            messages.error(request, 'Invalid Credentials',extra_tags="danger")
+            messages.error(request, 'Invalid Credentials', extra_tags="danger")
             return redirect('login')
     return render(request, 'authentication/login.html')
 
@@ -45,13 +46,19 @@ def register_user(request):
 def update_profile(request):
     profile = UserProfile.objects.get(user=request.user)
     if request.method == 'POST':
-        profile = UserProfileForm(request.POST,instance=profile)
+        profile = UserProfileForm(request.POST,request.FILES, instance=profile)
         if profile.is_valid():
             profile.save()
             messages.success(request, "Updated Profile")
             return redirect('dashboard')
         else:
-            messages.error(request,'Unexpected Error', extra_tags='danger')
+            messages.error(request, 'Unexpected Error', extra_tags='danger')
             return redirect('profile form')
     form = UserProfileForm(instance=profile)
     return render(request, 'authentication/profile_form.html', context={'form': form})
+
+
+@login_required
+def profile(request):
+    profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'authentication/profile.html', {'profile': profile})

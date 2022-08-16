@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contibution form</title>
-</head>
-<body>
-<form action="{% url 'create order' %}" method="post">
-    {% csrf_token %}
-    <input name="project_id" type="hidden" value="{{project_id}}">
-    <select name="currency" id="currency">
-        <option value="INR">INR</option>
-        <option value="USD">USD</option>
-    </select>
-    <input type="number" name="amount" placeholder="Amount">
-    <input type="submit" value="Checkout">
+{%extends '../base.html'%} {%block title%}Contibution form{%endblock%}
+{%block content%}
+<div class="card w-25 p-3">
+  <span class="fs-4 fw-bold"> {{project.title}} </span>
+  <span class="fw-light fs-5">Thanks for your Support</span>
+</div>
+<form action="{% url 'create order' %}" class="w-25" method="post">
+  {% csrf_token %}
+  <input name="project_id" type="hidden" value="{{project.id}}" />
+  <select class="form-select my-2" name="currency" id="currency">
+    <option value="INR">INR</option>
+    <option value="USD">USD</option>
+  </select>
+  <input
+    class="form-control my-2"
+    type="number"
+    name="amount"
+    placeholder="Amount"
+  />
+  <input class="btn btn-success mx-auto w-50 py-3" type="submit" value="Checkout" />
 </form>
-</body>
-</html>
+{%endblock%}

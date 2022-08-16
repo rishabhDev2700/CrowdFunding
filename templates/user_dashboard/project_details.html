@@ -3,6 +3,9 @@
 {%block content%}
 <div>
     <h2>Project</h2>
+    {%if project.cover%}
+    <img src="{{project.cover.url}}">
+    {%endif%}
     <div>{{project.title}}</div>
     <div>{{project.description}}</div>
     <div>{{project.target}}</div>

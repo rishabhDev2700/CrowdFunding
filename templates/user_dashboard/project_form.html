@@ -3,7 +3,7 @@
 {%block title%}Project{%endblock%}
 {%block content%}
 <div>
-    <form action="" method="post">
+    <form action="" enctype="multipart/form-data" method="post">
     {%csrf_token%}
         {{form|crispy}}
         <input class="btn btn-success px-3 py-2 m-2" type="submit" value="Save">

@@ -1,15 +1,24 @@
 {%extends 'base.html'%}
 {%block title%}Projects{%endblock%}
 {%block content%}
-<div>
     <h2>Projects</h2>
+<div class="d-flex">
     {%for project in all_projects%}
-    <div>{{project.title}}</div>
-    <div>{{project.description}}</div>
-    <div>{{project.target}}</div>
-    <a href="{%url 'project details' project.id %}">View</a>
-    <hr>
-    <br>
+    <div class="card m-2" style="width: 24rem;">
+    {%if project.cover%}
+  <img src="{{project.cover.url}}" class="card-img-top" alt="...">
+  {%endif%}
+  <div class="card-body">
+    <h5 class="card-title">{{project.title}}</h5>
+    <p class="card-text">{{project.description}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Owner: {{project.owner.first_name}}</li>
+  </ul>
+  <div class="card-body">
+     <a href="{%url 'project details' project.id %}">View</a>
+  </div>
+</div>
     {%endfor%}
 </div>
 {%endblock%}

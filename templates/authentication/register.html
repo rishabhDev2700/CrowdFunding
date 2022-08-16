@@ -2,11 +2,11 @@
 {%load crispy_forms_tags %}
 {%block title%}Register{%endblock%}
 {%block content%}
-<a href="{%url 'login' %}">Login</a>
-<hr>
 <form method="post">
     {%csrf_token%}
     {{form|crispy}}
     <input class="btn btn-info text-white px-4 py-3 m-2" type="submit" value="Register">
 </form>
+<hr>
+<span>Already have an Account? <a href="{%url 'login' %}">Login</a></span>
 {%endblock%}

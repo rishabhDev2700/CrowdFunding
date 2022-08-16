@@ -1,0 +1,19 @@
+{%extends '../base.html'%} {%block title%}Profile{%endblock%} {%block content%}
+<div class="card mb-3 w-50 mx-auto">
+  {% comment %} {%if profile.image %} {% endcomment %}
+  <img src="{{profile.picture.url}}" class="card-img-top" alt="No image" />
+  {% comment %} {%endif%} {% endcomment %}
+  <div class="card-body">
+    <h5 class="card-title">
+      {{profile.user.first_name}} {{profile.user.last_name}}
+    </h5>
+    <h5 class="card-title">{{profile.user.username}}</h5>
+    <p class="card-text">{{profile.bio}}</p>
+    <p class="card-text text-muted">{{profile.occupation}}</p>
+    <p class="card-text">{{profile.location}}</p>
+    <a class="card-text btn btn-outline-primary" href="{%url 'profile form'%}"
+      >Update Profile</a
+    >
+  </div>
+</div>
+{%endblock%}

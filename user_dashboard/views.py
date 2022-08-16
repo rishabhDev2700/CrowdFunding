@@ -35,7 +35,7 @@ def update_project(request, pk):
         messages.error(request, 'Project not found')
         return redirect('project form')
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=instance)
+        form = ProjectForm(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully Updated Project')
@@ -57,4 +57,5 @@ def project_details(request, project_id):
 
 @login_required
 def contribute_to_project(request, project_id):
-    return render(request, 'user_dashboard/contribution_form.html', {'project_id': project_id, })
+    project = Project.objects.get(pk=project_id)
+    return render(request, 'user_dashboard/contribution_form.html', {'project': project, })
